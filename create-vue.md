@@ -1,6 +1,6 @@
 # Vue - vue create、vue ui、vue init三种方式创建Vue项目
 ## 安装@vue/cli
-为npm安装的包配置环境变量。
+为npm安装的包配置环境变量
 
 ![在这里插入图片描述](./create-vue.assets/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3OTYwNjAz,size_16,color_FFFFFF,t_70.png)
 
