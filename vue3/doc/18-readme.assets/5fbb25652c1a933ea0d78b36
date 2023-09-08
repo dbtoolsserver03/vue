@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <!-- meta -->
+  <meta charset="utf-8"/>
+
+  
+
+  <title>【第18-20讲 Composition Api 】Vue3.x Composition API  详解</title>
+
+  <meta name="keywords" content="【第18-20讲 Composition Api 】Vue3.x Composition API  详解"/>
+  <meta name='description' content='【第18-20讲 Composition Api 】Vue3.x Composition API  详解'>
+
+  
+
+  <meta content="_csrf" name="csrf-param">
+  <meta content="BAiYuHHR-BHqFAJCUZA4P95hp-USu0DewLhc" name="csrf-token">
+
+ 
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  
+  <!-- see http://smerity.com/articles/2013/where_did_all_the_http_referrers_go.html -->
+  <meta name="referrer" content="always">
+
+  
+
+  <link title="RSS" type="application/rss+xml" rel="alternate" href="/rss"/>
+
+  
+  <link rel="icon" href="http://bbs.itying.com/public/images/cnode_icon_32.png" type="image/x-icon"/>
+  
+
+  <!-- style -->
+  <link rel="stylesheet" href="http://bbs.itying.com/public/libs/bootstrap/css/bootstrap.css?v=1691421953156" media="all" />
+<link rel="stylesheet" href="http://bbs.itying.com/public/stylesheets/common.css?v=1691421953156" media="all" />
+<link rel="stylesheet" href="http://bbs.itying.com/public/stylesheets/style.less?v=1691421953156" media="all" />
+<link rel="stylesheet" href="http://bbs.itying.com/public/stylesheets/responsive.css?v=1691421953156" media="all" />
+<link rel="stylesheet" href="http://bbs.itying.com/public/stylesheets/jquery.atwho.css?v=1691421953156" media="all" />
+<link rel="stylesheet" href="http://bbs.itying.com/public/libs/editor/editor.css?v=1691421953156" media="all" />
+<link rel="stylesheet" href="http://bbs.itying.com/public/libs/webuploader/webuploader.css?v=1691421953156" media="all" />
+<link rel="stylesheet" href="http://bbs.itying.com/public/libs/code-prettify/prettify.css?v=1691421953156" media="all" />
+<link rel="stylesheet" href="http://bbs.itying.com/public/libs/font-awesome/css/font-awesome.css?v=1691421953156" media="all" />
+
+
+  <script src="/public/libs/jquery-2.1.0.js"></script>
+  <script src="/public/libs/lodash.compat.js"></script>
+  <script src="/public/libs/jquery-ujs.js"></script>
+  <script src="/public/libs/bootstrap/js/bootstrap.js"></script>
+  <script src="/public/libs/jquery.caret.js"></script>
+  <script src="/public/libs/jquery.atwho.js"></script>
+  <script src="/public/libs/markdownit.js"></script>
+  <script src="/public/libs/code-prettify/prettify.js"></script>
+  <script src="/public/libs/qrcode.js"></script>
+  <script src="/public/javascripts/main.js"></script> 
+  <script src="/public/javascripts/responsive.js"></script>
+
+
+</head>
+<body>
+<!-- navbar -->
+<div class='navbar'>
+  <div class='navbar-inner'>
+    <div class='container'>
+      <a class='brand' href='/'>
+        
+          <img src="http://bbs.itying.com/public/images/itying_logo_1.png" />
+        
+      </a>
+
+      <form id='search_form' class='navbar-search' action="/search">
+        <input type='text' id='q' name='q' class='search-query span3' value=''/>
+      </form>
+      <ul class='nav pull-right'>
+        <li><a href='/'>首页</a></li>
+        
+        <li><a href='/getstart'>新手必看</a></li>
+        <li><a target="_blank" href='https://www.itying.com/category-79-b0.html'>挑战20K</a></li>
+        <li><a href='/about'>关于</a></li>
+        
+        
+        <li><a href='/signup'>注册</a></li>
+        <li><a href='/signin'>登录</a></li>
+        
+      </ul>
+      <a class="btn btn-navbar" id="responsive-sidebar-trigger">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+    </div>
+  </div>
+</div>
+<div id='main'>
+  
+
+
+<div id='sidebar'>
+  <div class='panel'>
+    <div class='header'>
+      <span class='col_fade'>作者</span>
+    </div>
+    <div class='inner'>
+      
+
+<div class='user_card'>
+  <div>
+    <a class='user_avatar' href="/user/phonegap100">
+      <img src="https://avatars.githubusercontent.com/u/5773766?v=4&amp;s=120" title="phonegap100"/>
+    </a>
+    <span class='user_name'><a class='dark' href="/user/phonegap100">phonegap100</a></span>
+
+    <div class='board clearfix'>
+      <div class='floor'>
+        <span class='big'>积分: 2680 </span>
+      </div>
+    </div>
+    <div class="space clearfix"></div>
+    <span class="signature">
+        “
+        
+            这家伙很懒，什么个性签名都没有留下。
+        
+        ”
+    </span>
+  </div>
+</div>
+
+
+
+
+
+    </div>
+  </div>
+
+
+  <div class="panel">
+    <div class="inner ads">
+        <a href="https://www.itying.com/category-88-b0.html" target="_blank" class="banner sponsor_outlink" data-label="qiniu-sidebar">
+          <img src="/public/flutter.png">
+        </a>      
+    </div>
+  </div>
+  
+   <div class="panel">
+    <div class="inner ads">
+        <a href="https://www.itying.com/category-90-b0.html" target="_blank" class="banner sponsor_outlink" data-label="qiniu-sidebar">
+          <img src="/public/beego.png">
+        </a>      
+    </div>
+  </div>
+  
+  
+  <div class="panel">
+    <div class="inner ads">
+        <a href="https://www.itying.com/goods-1067.html" target="_blank" class="banner sponsor_outlink" data-label="qiniu-sidebar">
+          <img src="/public/ionic4.png">
+        </a>      
+    </div>
+  </div>
+
+
+<div class="panel">
+    <div class="inner ads">      
+        
+        <a href="https://www.itying.com/goods-1072.html" target="_blank" class="banner sponsor_outlink" data-label="qiniu-sidebar">
+          <img src="/public/zhibo.png">
+        </a>
+      
+    </div>
+  </div>
+
+
+
+
+  
+    
+  
+
+  <div class='panel'>
+    <div class='header'>
+      <span class='col_fade'>作者其它话题</span>
+    </div>
+    <div class='inner'>
+      
+      <ul class='unstyled'>
+        <li>
+  <div><a class='dark topic_title' href="/topic/5fbb25652c1a933ea0d78b36" title="【第18-20讲 Composition Api 】Vue3.x Composition API  详解">【第18-20讲 Composition Api 】Vue3.x Composition API  详解</a>
+  </div>
+</li>
+
+      </ul>
+      
+    </div>
+  </div>
+
+  <div class='panel'>
+    <div class='header'>
+      <span class='col_fade'>无人回复的话题</span>
+    </div>
+    <div class='inner'>
+      
+      <ul class='unstyled'>
+        <li>
+  <div><a class='dark topic_title' href="/topic/5fbb25652c1a933ea0d78b36" title="【第18-20讲 Composition Api 】Vue3.x Composition API  详解">【第18-20讲 Composition Api 】Vue3.x Composition API  详解</a>
+  </div>
+</li>
+
+      </ul>
+      
+    </div>
+  </div>
+</div>
+
+<div id='content'>
+
+  <div class='panel'>
+    <div style="margin-bottom:20px;margin-bottom:10px">
+      <a href="https://www.bilibili.com/video/av52490605/?p=17" target="_blank"><img src="http://bbs.itying.com/public/flutter_b.png" /></a>       
+    </div>
+ 
+    <div class='header topic_header'>
+      <h1 class="topic_full_title">
+
+        
+
+
+        【第18-20讲 Composition Api 】Vue3.x Composition API  详解
+      </h1>
+      <div class="changes">
+        <span>
+          发布于 3 年前
+        </span>
+        <span>
+          作者 <a href="/user/phonegap100">phonegap100</a>
+        </span>
+        <span>
+          5552 次浏览
+        </span>
+        
+          <span>
+            最后一次编辑是 3 年前
+          </span>
+        
+        
+          <span> 来自 Vue3教程</span>
+        
+
+        
+
+      </div>
+      
+    </div>
+
+    
+    <div class='inner topic'>
+
+      <div class='topic_content'>		
+
+        <div class="markdown-text"><h3>一、 Composition API的简单介绍</h3>
+<p>Composition API也叫组合式API，是Vue3.x的新特性。</p>
+<p>通过创建 Vue 组件，我们可以将接口的可重复部分及其功能提取到可重用的代码段中。仅此一项就可以使我们的应用程序在可维护性和灵活性方面走得更远。然而，我们的经验已经证明，光靠这一点可能是不够的，尤其是当你的应用程序变得非常大的时候——想想几百个组件。在处理如此大的应用程序时，共享和重用代码变得尤为重要。</p>
+<p><strong>通俗的讲：</strong></p>
+<p>没有Composition API之前vue相关业务的代码需要配置到option的特定的区域，中小型项目是没有问题的，但是在大型项目中会导致后期的维护性比较复杂，同时代码可复用性不高。Vue3.x中的composition-api就是为了解决这个问题而生的。</p>
+<p><strong>compositon-api提供了以下几个函数：</strong></p>
+<ul>
+<li>
+<p>setup</p>
+</li>
+<li>
+<p>ref</p>
+</li>
+<li>
+<p>reactive</p>
+</li>
+<li>
+<p>watchEffect</p>
+</li>
+<li>
+<p>watch</p>
+</li>
+<li>
+<p>computed</p>
+</li>
+<li>
+<p>toRefs</p>
+</li>
+<li>
+<p>生命周期的hooks</p>
+</li>
+</ul>
+<h3>二、<code>setup</code> 组件选项</h3>
+<p>新的 <code>setup</code> 组件选项在<strong>创建组件之前</strong>执行，一旦 <code>props</code> 被解析，并充当合成 API 的入口点。</p>
+<p><strong>提示：</strong></p>
+<pre class="prettyprint"><code>由于在执行 setup 时尚未创建组件实例，因此在 setup 选项中没有 this。这意味着，除了props 之外，你将无法访问组件中声明的任何属性——本地状态、计算属性或方法。
+</code></pre><p>使用 <code>setup</code> 函数时，它将接受两个参数：</p>
+<ol>
+<li><code>props</code></li>
+<li><code>context</code></li>
+</ol>
+<p>让我们更深入地研究如何使用每个参数。</p>
+<h4>2.1、Props</h4>
+<p><code>setup</code> 函数中的第一个参数是 <code>props</code>。正如在一个标准组件中所期望的那样，<code>setup</code> 函数中的 <code>props</code> 是响应式的，当传入新的 prop 时，它将被更新。</p>
+<pre class="prettyprint"><code>&#x2F;&#x2F; MyBook.vue
+
+export default {
+  props: {
+    title: String
+  },
+  setup(props) {
+    console.log(props.title)
+  }
+}
+</code></pre><p><strong>注意：</strong></p>
+<pre class="prettyprint"><code>但是，因为 props 是响应式的，你不能使用 ES6 解构，因为它会消除 prop 的响应性。
+</code></pre><p>如果需要解构 prop，可以通过使用 <code>setup</code> 函数中的 <a href="https://v3.cn.vuejs.org/guide/reactivity-fundamentals.html#%E5%93%8D%E5%BA%94%E5%BC%8F%E7%8A%B6%E6%80%81%E8%A7%A3%E6%9E%84"><code>toRefs</code></a> 来安全地完成此操作。</p>
+<pre class="prettyprint"><code>&#x2F;&#x2F; MyBook.vue
+
+import { toRefs } from &#x27;vue&#x27;
+
+setup(props) {
+	const { title } = toRefs(props)
+
+	console.log(title.value)
+}
+</code></pre><h4>2.2、上下文</h4>
+<p>传递给 <code>setup</code> 函数的第二个参数是 <code>context</code>。<code>context</code> 是一个普通的 JavaScript 对象，它暴露三个组件的 property：</p>
+<pre class="prettyprint"><code>&#x2F;&#x2F; MyBook.vue
+
+export default {
+  setup(props, context) {
+    &#x2F;&#x2F; Attribute (非响应式对象)
+    console.log(context.attrs)
+
+    &#x2F;&#x2F; 插槽 (非响应式对象)
+    console.log(context.slots)
+
+    &#x2F;&#x2F; 触发事件 (方法)
+    console.log(context.emit)
+  }
+}
+</code></pre><p><code>context</code> 是一个普通的 JavaScript 对象，也就是说，它不是响应式的，这意味着你可以安全地对 <code>context</code> 使用 ES6 解构。</p>
+<pre class="prettyprint"><code>&#x2F;&#x2F; MyBook.vue
+export default {
+  setup(props, { attrs, slots, emit }) {
+    ...
+  }
+}
+</code></pre><p><code>attrs</code> 和 <code>slots</code> 是有状态的对象，它们总是会随组件本身的更新而更新。这意味着你应该避免对它们进行解构，并始终以 <code>attrs.x</code> 或 <code>slots.x</code> 的方式引用 property。请注意，与 <code>props</code> 不同，<code>attrs</code> 和 <code>slots</code> 是<strong>非</strong>响应式的。如果你打算根据 <code>attrs</code> 或 <code>slots</code> 更改应用副作用，那么应该在 <code>onUpdated</code> 生命周期钩子中执行此操作。</p>
+<h4>2.3、setup组件的 property</h4>
+<p>执行 <code>setup</code> 时，组件实例尚未被创建。因此，你只能访问以下 property：</p>
+<ul>
+<li><code>props</code></li>
+<li><code>attrs</code></li>
+<li><code>slots</code></li>
+<li><code>emit</code></li>
+</ul>
+<p>换句话说，你<strong>将无法访问</strong>以下组件选项：</p>
+<ul>
+<li><code>data</code></li>
+<li><code>computed</code></li>
+<li><code>methods</code></li>
+</ul>
+<h4>2.4、ref  reactive 以及setup结合模板使用</h4>
+<p>在看setup结合模板使用之前，我们首先得知道ref 和 reactive 方法。</p>
+<p>如果 <code>setup</code> 返回一个对象则可以在模板中绑定对象中的属性和方法，但是要定义响应式数据的时候可以使用ref, reactive方法定义响应式的数据。</p>
+<h5><strong>错误写法：</strong></h5>
+<pre class="prettyprint"><code>&lt;template&gt;
+{{msg}}
+&lt;br&gt;
+
+&lt;button @click=&quot;updateMsg&quot;&gt;改变etup中的msg&lt;&#x2F;button&gt;
+
+&lt;br&gt;
+&lt;&#x2F;template&gt;
+
+&lt;script&gt;
+export default {
+    data() {
+        return {
+
+        }
+    },
+    setup() {
+        let msg = &quot;这是setup中的msg&quot;;
+        let updateMsg = () =&gt; {
+            alert(&quot;触发方法&quot;)
+            msg = &quot;改变后的值&quot;
+        }
+        return {
+            msg,
+            updateMsg
+        }
+    },
+
+}
+&lt;&#x2F;script&gt;
+
+&lt;style lang=&quot;scss&quot;&gt;
+.home {
+    position: relative;
+}
+&lt;&#x2F;style&gt;
+
+</code></pre><h5><strong>正确写法一：</strong></h5>
+<p><strong>ref</strong>用来定义响应式的 字符串、 数值、 数组、Bool类型</p>
+<pre class="prettyprint"><code>import {  
+    ref
+} from &#x27;vue&#x27;
+</code></pre><pre class="prettyprint"><code>&lt;template&gt;
+{{msg}}
+&lt;br&gt;
+&lt;br&gt;
+&lt;button @click=&quot;updateMsg&quot;&gt;改变etup中的msg&lt;&#x2F;button&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;ul&gt;
+    &lt;li v-for=&quot;(item,index) in list&quot; :key=&quot;index&quot;&gt;
+        {{item}}
+    &lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+
+&lt;br&gt;
+&lt;&#x2F;template&gt;
+
+&lt;script&gt;
+import {
+
+    ref
+} from &#x27;vue&#x27;
+
+export default {
+    data() {
+        return {
+
+        }
+    },
+    setup() {
+        let msg = ref(&quot;这是setup中的msg&quot;);
+
+        let list = ref([&quot;马总&quot;, &quot;李总&quot;, &quot;刘总&quot;])
+
+        let updateMsg = () =&gt; {
+            alert(&quot;触发方法&quot;);
+            msg.value = &quot;改变后的值&quot;
+        }
+        return {
+            msg,
+            list,
+            updateMsg
+        }
+    },
+
+}
+&lt;&#x2F;script&gt;
+
+&lt;style lang=&quot;scss&quot;&gt;
+.home {
+    position: relative;
+}
+&lt;&#x2F;style&gt;
+
+
+</code></pre><h5><strong>正确写法二：</strong></h5>
+<p><strong>reactive</strong> 用来定义响应式的对象</p>
+<pre class="prettyprint"><code>import {
+    reactive   
+} from &#x27;vue&#x27;
+
+</code></pre><pre class="prettyprint"><code>&lt;template&gt;
+{{msg}}
+&lt;br&gt;
+&lt;br&gt;
+&lt;button @click=&quot;updateMsg&quot;&gt;改变setup中的msg&lt;&#x2F;button&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;ul&gt;
+    &lt;li v-for=&quot;(item,index) in list&quot; :key=&quot;index&quot;&gt;
+        {{item}}
+    &lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;br&gt;
+{{setupData.title}}
+&lt;br&gt;
+&lt;button @click=&quot;updateTitle&quot;&gt;更新setup中的title&lt;&#x2F;button&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;&#x2F;template&gt;
+
+&lt;script&gt;
+import {
+    reactive,
+    ref
+} from &#x27;vue&#x27;
+
+export default {
+    data() {
+        return {
+
+        }
+    },
+    setup() {
+        let msg = ref(&quot;这是setup中的msg&quot;);
+
+        let setupData = reactive({
+            title: &quot;reactive定义响应式数据的title&quot;,
+            userinfo: {
+                username: &quot;张三&quot;,
+                age: 20
+            }
+
+        })
+
+        let updateMsg = () =&gt; {
+            alert(&quot;触发方法&quot;);
+            msg.value = &quot;改变后的值&quot;
+        }
+        let updateTitle = () =&gt; {
+            alert(&quot;触发方法&quot;);
+            setupData.title = &quot;我是改变后的title&quot;
+
+        }
+        return {
+            msg,
+            setupData,
+            updateMsg,
+            updateTitle
+        }
+    },
+
+}
+&lt;&#x2F;script&gt;
+
+&lt;style lang=&quot;scss&quot;&gt;
+.home {
+    position: relative;
+}
+&lt;&#x2F;style&gt;
+
+
+</code></pre><p>**说明:**要改变ref定义的属性名称需要通过 <code>属性名称.value</code>来修改，要改变reactive中定义的对象名称可以直接</p>
+<h4>2.5、使用 <code>this</code></h4>
+<p><strong>在 <code>setup()</code> 内部，<code>this</code> 不会是该活跃实例的引用</strong>，因为 <code>setup()</code> 是在解析其它组件选项之前被调用的，所以 <code>setup()</code> 内部的 <code>this</code> 的行为与其它选项中的 <code>this</code> 完全不同。这在和其它选项式 API 一起使用 <code>setup()</code> 时可能会导致混淆。</p>
+<h3>二、 toRefs - 解构响应式对象数据</h3>
+<p>把一个响应式对象转换成普通对象，该普通对象的每个 property 都是一个 ref ，和响应式对象 property 一一对应。</p>
+<pre class="prettyprint"><code>&lt;template&gt;
+&lt;div&gt;
+    &lt;h1&gt;解构响应式对象数据&lt;&#x2F;h1&gt;
+    &lt;p&gt;Username: {{username}}&lt;&#x2F;p&gt;
+    &lt;p&gt;Age: {{age}}&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;&#x2F;template&gt;
+
+&lt;script&gt;
+import {
+    reactive,
+    toRefs
+} from &quot;vue&quot;;
+
+export default {
+    name: &quot;解构响应式对象数据&quot;,
+    setup() {
+        const user = reactive({
+            username: &quot;张三&quot;,
+            age: 10000,
+        });
+
+        return {
+            ...toRefs(user)
+        };
+    },
+};
+&lt;&#x2F;script&gt;
+
+</code></pre><p>当想要从一个组合逻辑函数中返回响应式对象时，用 toRefs 是很有效的，该 API 让消费组件可以 解构 / 扩展（使用 … 操作符）返回的对象，并不会丢失响应性：</p>
+<pre class="prettyprint"><code>function useFeatureX() {
+  const state = reactive({
+    foo: 1,
+    bar: 2,
+  })
+
+  &#x2F;&#x2F; 对 state 的逻辑操作
+  &#x2F;&#x2F; ....
+
+  &#x2F;&#x2F; 返回时将属性都转为 ref
+  return toRefs(state)
+}
+
+export default {
+  setup() {
+    &#x2F;&#x2F; 可以解构，不会丢失响应性
+    const { foo, bar } = useFeatureX()
+
+    return {
+      foo,
+      bar,
+    }
+  },
+}
+</code></pre><h3>三、computed - 计算属性</h3>
+<pre class="prettyprint"><code>&lt;template&gt;
+&lt;div&gt;
+    &lt;h1&gt;解构响应式对象数据+computed&lt;&#x2F;h1&gt;
+
+    &lt;input type=&quot;text&quot; v-model=&quot;firstName&quot; placeholder=&quot;firstName&quot; &#x2F;&gt;
+    &lt;br&gt;
+    &lt;br&gt;
+    &lt;input type=&quot;text&quot; v-model=&quot;lastName&quot; placeholder=&quot;lastName&quot; &#x2F;&gt;
+
+    &lt;br&gt;
+    {{fullName}}
+&lt;&#x2F;div&gt;
+&lt;&#x2F;template&gt;
+
+&lt;script&gt;
+import {
+    reactive,
+    toRefs,
+    computed
+} from &quot;vue&quot;;
+
+export default {
+    name: &quot;解构响应式对象数据&quot;,
+    setup() {
+        const user = reactive({
+            firstName: &quot;&quot;,
+            lastName: &quot;&quot;,
+        });
+
+        const fullName = computed(() =&gt; {
+            return user.firstName + &quot; &quot; + user.lastName
+        })
+
+        return {
+            ...toRefs(user),
+            fullName
+        };
+    },
+};
+&lt;&#x2F;script&gt;
+
+
+</code></pre><h3>四、readonly  “深层”的只读代理</h3>
+<p>传入一个对象（响应式或普通）或 ref，返回一个原始对象的只读代理。一个只读的代理是“深层的”，对象内部任何嵌套的属性也都是只读的。</p>
+<pre class="prettyprint"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;h1&gt;readonly - “深层”的只读代理&lt;&#x2F;h1&gt;
+    &lt;p&gt;original.count: {{original.count}}&lt;&#x2F;p&gt;
+    &lt;p&gt;copy.count: {{copy.count}}&lt;&#x2F;p&gt;
+  &lt;&#x2F;div&gt;
+&lt;&#x2F;template&gt;
+
+&lt;script&gt;
+import { reactive, readonly } from &quot;vue&quot;;
+
+export default {
+  name: &quot;Readonly&quot;,
+  setup() {
+    const original = reactive({ count: 0 });
+    const copy = readonly(original);
+
+    setInterval(() =&gt; {
+      original.count++;
+      copy.count++; &#x2F;&#x2F; 报警告，Set operation on key &quot;count&quot; failed: target is readonly. Proxy {count: 1}
+    }, 1000);
+
+
+    return { original, copy };
+  },
+};
+&lt;&#x2F;script&gt;
+</code></pre><h3>五、watchEffect</h3>
+<p>在响应式地跟踪其依赖项时立即运行一个函数，并在更改依赖项时重新运行它。</p>
+<pre class="prettyprint"><code>&lt;template&gt;
+&lt;div&gt;
+    &lt;h1&gt;watchEffect - 侦听器&lt;&#x2F;h1&gt;
+    &lt;p&gt;{{data.count}}&lt;&#x2F;p&gt;
+    &lt;button @click=&quot;stop&quot;&gt;手动关闭侦听器&lt;&#x2F;button&gt;
+&lt;&#x2F;div&gt;
+&lt;&#x2F;template&gt;
+
+&lt;script&gt;
+import {
+    reactive,
+    watchEffect
+} from &quot;vue&quot;;
+export default {
+    name: &quot;WatchEffect&quot;,
+    setup() {
+        const data = reactive({
+            count: 1,
+            num: 1
+        });
+        const stop = watchEffect(() =&gt; console.log(&#96;侦听器：${data.count}&#96;));
+        setInterval(() =&gt; {
+            data.count++;
+        }, 1000);
+        return {
+            data,
+            stop
+        };
+    },
+};
+&lt;&#x2F;script&gt;
+
+</code></pre><h3>六、watch 、watch 与watchEffect区别</h3>
+<p>对比<code>watchEffect</code>，<code>watch</code>允许我们：</p>
+<ul>
+<li>懒执行，也就是说仅在侦听的源变更时才执行回调；</li>
+<li>更明确哪些状态的改变会触发侦听器重新运行；</li>
+<li>访问侦听状态变化前后的值</li>
+</ul>
+<p><strong>更明确哪些状态的改变会触发侦听器重新运行；</strong></p>
+<pre class="prettyprint"><code>&lt;template&gt;
+&lt;div&gt;
+    &lt;h1&gt;watch - 侦听器&lt;&#x2F;h1&gt;
+    &lt;p&gt;count1: {{data.count1}}&lt;&#x2F;p&gt;
+    &lt;p&gt;count2: {{data.count2}}&lt;&#x2F;p&gt;
+    &lt;button @click=&quot;stopAll&quot;&gt;Stop All&lt;&#x2F;button&gt;
+&lt;&#x2F;div&gt;
+&lt;&#x2F;template&gt;
+
+&lt;script&gt;
+import {
+    reactive,
+    watch
+} from &quot;vue&quot;;
+export default {
+    name: &quot;Watch&quot;,
+    setup() {
+        const data = reactive({
+            count1: 0,
+            count2: 0
+        });
+        &#x2F;&#x2F; 侦听单个数据源
+        const stop1 = watch(data, () =&gt;
+            console.log(&quot;watch1&quot;, data.count1, data.count2)
+        );
+        &#x2F;&#x2F; 侦听多个数据源
+        const stop2 = watch([data], () =&gt; {
+            console.log(&quot;watch2&quot;, data.count1, data.count2);
+        });
+        setInterval(() =&gt; {
+            data.count1++;
+        }, 1000);
+        return {
+            data,
+            stopAll: () =&gt; {
+                stop1();
+                stop2();
+            },
+        };
+    },
+};
+&lt;&#x2F;script&gt;
+
+</code></pre><p><strong>访问侦听状态变化前后的值</strong></p>
+<pre class="prettyprint"><code>&lt;template&gt;
+&lt;div&gt;
+    &lt;h1&gt;watch - 侦听器&lt;&#x2F;h1&gt;
+    &lt;input type=&quot;text&quot; v-model=&quot;keywords&quot; &#x2F;&gt;
+&lt;&#x2F;div&gt;
+&lt;&#x2F;template&gt;
+
+&lt;script&gt;
+import {
+    ref,
+    watch
+} from &quot;vue&quot;;
+export default {
+    name: &quot;Watch&quot;,
+    setup() {
+        let keywords = ref(&quot;111&quot;);
+        &#x2F;&#x2F; 侦听单个数据源
+        watch(keywords, (newValue, oldValue) =&gt; {
+            console.log(newValue, oldValue)
+        });
+
+        return {
+            keywords
+        };
+    },
+};
+&lt;&#x2F;script&gt;
+
+</code></pre><p><strong>懒执行，也就是说仅在侦听的源变更时才执行回调</strong></p>
+<pre class="prettyprint"><code>&lt;template&gt;
+&lt;div&gt;
+    &lt;h1&gt;watch - 侦听器&lt;&#x2F;h1&gt;
+    &lt;p&gt;num1={{num1}}&lt;&#x2F;p&gt;
+    &lt;p&gt;num2={{num2}}&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;&#x2F;template&gt;
+
+&lt;script&gt;
+import {
+    ref,
+    watch,
+    watchEffect
+} from &quot;vue&quot;;
+export default {
+    name: &quot;Watch&quot;,
+    setup() {
+        let num1 = ref(10);
+        let num2 = ref(10);
+        &#x2F;&#x2F; 侦听单个数据源
+        watch(num1, (newValue, oldValue) =&gt; {
+            console.log(newValue, oldValue)
+        });
+
+        watchEffect(() =&gt; console.log(&#96;watchEffect侦听器：${num2.value}&#96;));
+
+        return {
+            num1,
+            num2
+        };
+    },
+};
+&lt;&#x2F;script&gt;
+
+</code></pre><h3>七、组合式api生命周期钩子</h3>
+<p>你可以通过在生命周期钩子前面加上 “on” 来访问组件的生命周期钩子。</p>
+<p>下表包含如何在 <a href="https://v3.cn.vuejs.org/guide/composition-api-setup.html">setup ()</a> 内部调用生命周期钩子：</p>
+<table>
+<thead>
+<tr>
+<th>选项式 API</th>
+<th>Hook inside <code>setup</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>beforeCreate</code></td>
+<td>Not needed*</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Not needed*</td>
+</tr>
+<tr>
+<td><code>beforeMount</code></td>
+<td><code>onBeforeMount</code></td>
+</tr>
+<tr>
+<td><code>mounted</code></td>
+<td><code>onMounted</code></td>
+</tr>
+<tr>
+<td><code>beforeUpdate</code></td>
+<td><code>onBeforeUpdate</code></td>
+</tr>
+<tr>
+<td><code>updated</code></td>
+<td><code>onUpdated</code></td>
+</tr>
+<tr>
+<td><code>beforeUnmount</code></td>
+<td><code>onBeforeUnmount</code></td>
+</tr>
+<tr>
+<td><code>unmounted</code></td>
+<td><code>onUnmounted</code></td>
+</tr>
+<tr>
+<td><code>errorCaptured</code></td>
+<td><code>onErrorCaptured</code></td>
+</tr>
+<tr>
+<td><code>renderTracked</code></td>
+<td><code>onRenderTracked</code></td>
+</tr>
+<tr>
+<td><code>renderTriggered</code></td>
+<td><code>onRenderTriggered</code></td>
+</tr>
+</tbody>
+</table>
+<p>因为 <code>setup</code> 是围绕 <code>beforeCreate</code> 和 <code>created</code> 生命周期钩子运行的，所以不需要显式地定义它们。换句话说，在这些钩子中编写的任何代码都应该直接在 <code>setup</code> 函数中编写。</p>
+<pre class="prettyprint"><code>export default {
+  setup() {
+    &#x2F;&#x2F; mounted
+    onMounted(() =&gt; {
+      console.log(&#x27;Component is mounted!&#x27;)
+    })
+  }
+}
+</code></pre><h3>八、Provider Inject</h3>
+<p>通常，当我们需要将数据从父组件传递到子组件时，我们使用 <a href="https://v3.cn.vuejs.org/guide/component-props.html">props</a>。想象一下这样的结构：你有一些深嵌套的组件，而你只需要来自深嵌套子组件中父组件的某些内容。在这种情况下，你仍然需要将 prop 传递到整个组件链中，这可能会很烦人。</p>
+<p>对于这种情况，我们可以使用 <code>provide</code> 和 <code>inject</code> 对父组件可以作为其所有子组件的依赖项提供程序，而不管组件层次结构有多深。这个特性有两个部分：父组件有一个 <code>provide</code> 选项来提供数据，子组件有一个 <code>inject</code> 选项来开始使用这个数据。</p>
+<p><img src alt="image-20201104114901285"></p>
+<h4><strong>8.1 、非组合式api中的写法：</strong></h4>
+<pre class="prettyprint"><code>&lt;!-- src&#x2F;components&#x2F;MyMap.vue --&gt;
+&lt;template&gt;
+  &lt;MyMarker &#x2F;&gt;
+&lt;&#x2F;template&gt;
+
+&lt;script&gt;
+import MyMarker from &#x27;.&#x2F;MyMarker.vue&#x27;
+
+export default {
+  components: {
+    MyMarker
+  },
+  provide: {
+    location: &#x27;North Pole&#x27;,
+    geolocation: {
+      longitude: 90,
+      latitude: 135
+    }
+  }
+}
+&lt;&#x2F;script&gt;
+&lt;!-- src&#x2F;components&#x2F;MyMarker.vue --&gt;
+&lt;script&gt;
+export default {
+  inject: [&#x27;location&#x27;, &#x27;geolocation&#x27;]
+}
+&lt;&#x2F;script&gt;
+</code></pre><h4><strong>8.2、组合式api中的写法：</strong></h4>
+<h5>Provider：</h5>
+<p>在 <code>setup()</code> 中使用 <code>provide</code> 时，我们首先从 <code>vue</code> 显式导入 <code>provide</code> 方法。这使我们能够调用 <code>provide</code> 时来定义每个 property。</p>
+<p><code>provide</code> 函数允许你通过两个参数定义 property：</p>
+<ol>
+<li>property 的 name (<code>&lt;String&gt;</code> 类型)</li>
+<li>property 的 value</li>
+</ol>
+<p>使用 <code>MyMap</code> 组件，我们提供的值可以按如下方式重构：</p>
+<pre class="prettyprint"><code>&lt;!-- src&#x2F;components&#x2F;MyMap.vue --&gt;
+&lt;template&gt;
+  &lt;MyMarker &#x2F;&gt;
+&lt;&#x2F;template&gt;
+
+&lt;script&gt;
+import { provide } from &#x27;vue&#x27;
+import MyMarker from &#x27;.&#x2F;MyMarker.vue
+
+export default {
+  components: {
+    MyMarker
+  },
+  setup() {
+    provide(&#x27;location&#x27;, &#x27;North Pole&#x27;)
+    provide(&#x27;geolocation&#x27;, {
+      longitude: 90,
+      latitude: 135
+    })
+  }
+}
+&lt;&#x2F;script&gt;
+</code></pre><h5>Inject:</h5>
+<p>在 <code>setup()</code> 中使用 <code>inject</code> 时，还需要从 <code>vue</code> 显式导入它。一旦我们这样做了，我们就可以调用它来定义如何将它暴露给我们的组件。</p>
+<p><code>inject</code> 函数有两个参数：</p>
+<ol>
+<li>要注入的 property 的名称</li>
+<li>一个默认的值 (<strong>可选</strong>)</li>
+</ol>
+<p>使用 <code>MyMarker</code> 组件，可以使用以下代码对其进行重构：</p>
+<pre class="prettyprint"><code>&lt;!-- src&#x2F;components&#x2F;MyMarker.vue --&gt;
+&lt;script&gt;
+import { inject } from &#x27;vue&#x27;
+
+export default {
+  setup() {
+    const userLocation = inject(&#x27;location&#x27;, &#x27;The Universe&#x27;)
+    const userGeolocation = inject(&#x27;geolocation&#x27;)
+
+    return {
+      userLocation,
+      userGeolocation
+    }
+  }
+}
+&lt;&#x2F;script&gt;
+</code></pre><p><strong>Provider Inject 响应性</strong></p>
+<p><strong>父组件：</strong></p>
+<pre class="prettyprint"><code>import {
+    provide,
+    ref,
+    reactive
+} from &#x27;vue&#x27;
+
+setup() {
+        const location = ref(&#x27;北京&#x27;)
+        const geolocation = reactive({
+            longitude: 90,
+            latitude: 135
+        })
+        const updateLocation = () =&gt; {
+            location.value = &#x27;上海&#x27;
+        }
+        provide(&#x27;location&#x27;, location);
+        provide(&#x27;geolocation&#x27;, geolocation);
+        return {
+            updateLocation
+        }
+    }
+</code></pre><pre class="prettyprint"><code>&lt;button @click=&quot;updateLocation&quot;&gt;改变location&lt;&#x2F;button&gt;
+</code></pre><p><strong>子组件：</strong></p>
+<pre class="prettyprint"><code>import { inject } from &#x27;vue&#x27;
+
+export default {
+  setup() {
+    const userLocation = inject(&#x27;location&#x27;, &#x27;The Universe&#x27;)
+    const userGeolocation = inject(&#x27;geolocation&#x27;)
+
+    return {
+      userLocation,
+      userGeolocation
+    }
+  }
+}
+&lt;&#x2F;script&gt;
+</code></pre></div>
+		
+      </div>  
+		
+    </div>
+  </div>
+ 
+	<div class='panel'>
+    <div style="margin-bottom:20px;margin-bottom:10px">
+      <!-- <a href="https://www.itying.com/category-83-b0.html" target="_blank"><img src="http://bbs.itying.com/public/bbs_serverless.png" /></a> -->
+
+      <ul class="review-list clearfix">
+        <li class="review-item review-item-first free">
+          <div class="figure figure-img">
+            <a class="exposure" href="https://www.itying.com/goods-1101.html" target="_blank">
+              <img src="https://www.itying.com/themes/itying/images/typescript/flutter.png" alt="Dart Flutter教程" />
+            </a>
+          </div>  
+          <p><a target="_blank" href="https://www.itying.com/goods-1101.html">（80多万人在学）Dart Flutter入门实战系列视频教程</a></p>
+          
+        </li>
+
+        <li class="review-item review-item-first">
+          <div class="figure figure-img">
+            <a class="exposure" href="https://www.itying.com/goods-1152.html" target="_blank">
+              <img src="https://www.itying.com/themes/itying/images/serverless.png" alt="Serverless+Egg.js+Mysql+Vue3.x打造全栈无人点餐 无人收银系统" />
+            </a>
+          </div>
+          <p><a target="_blank" href="https://www.itying.com/goods-1152.html">Serverless+Egg.js+Vue3.x无人点餐 无人收银全栈项目</a></p>					
+        </li>  
+        <li class="review-item review-item-first">
+          <div class="figure figure-img">
+            <a class="exposure" href="https://www.itying.com/category-83-b0.html" target="_blank">
+              <img src="https://www.itying.com/themes/itying/images/nodejs/nestjs.png" alt="Nest教程_Nestjs仿小米商城企业级Nodejs项目实战视频教程">
+            </a>
+          </div>
+          <p><a target="_blank" href="https://www.itying.com/category-83-b0.html">Nestjs仿小米商城企业级Nodejs项目实战视频教</p></a></p>
+          <p class="review">
+            <a target="_blank" href="https://www.itying.com/category-83-b0.html">Nestjs基础、Mongoose、RBAC权限管理、Nodejs redis、Elasticsearch全文搜索引擎、Pc端微信支付、Pc端支付宝支付、RESTful API、Graphql、SSL证书、Https配置等...</a>
+          </p>
+        </li>
+        <li class="review-item review-item-first">
+          <div class="figure figure-img">
+            <a class="exposure" href="https://www.itying.com/goods-929.html" target="_blank">
+              <img src="https://www.itying.com/themes/itying/images/typescript/electron.png" alt="Egg视频教程">
+            </a>
+          </div>
+          <p><a target="_blank" href="https://www.itying.com/goods-929.html">Electron+Vue跨平台桌面软件开发视频教程-打造舆情监控系统</a></p>					
+        </li>
+        <li class="review-item review-item-first">
+          <div class="figure figure-img">
+            <a class="exposure" href="https://www.itying.com/goods-1151.html" target="_blank">
+              <img src="https://www.itying.com/themes/itying/images/xin_nian_284.png" alt="视频教程">
+            </a>
+          </div>
+          <p><a target="_blank" href="https://www.itying.com/goods-1151.html">[全栈大礼包]大前端全栈教程原价808元现价只需258元-限时优惠1个月</a></p>					
+        </li>
+    </ul>      
+      
+    </div>
+  </div>
+  
+  
+  
+</div>
+
+<div class="replies_history" style="display: none;">
+  <div class="inner_content"></div>
+  <div class="anchor"></div>
+</div>
+
+<!-- 预览模态对话框 -->
+<div class="modal fade" id="preview-modal">
+  <div class="modal-body" style="max-height: initial;">
+    <img src="" alt="点击内容或者外部自动关闭图片预览" id="preview-image">
+  </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+  (function(){
+    var timer = null; //对话框延时定时器
+    // 初始化 $('.replies_history')
+    var $repliesHistory = $('.replies_history');
+    var $repliesHistoryContent = $repliesHistory.find('.inner_content');
+    $repliesHistory.hide();
+    // END
+    // 鼠标移入对话框清除隐藏定时器；移出时隐藏对话框
+    $repliesHistory.on('mouseenter', function(){
+      clearTimeout(timer);
+    }).on('mouseleave', function(){
+      $repliesHistory.fadeOut('fast');
+    });
+    // 显示被 at 用户的本页评论
+    if ($('.reply2_item').length === 0) {
+      // 只在流式评论布局中使用
+      $('#content').on('mouseenter', '.reply_content a', function (e) {
+        clearTimeout(timer);
+        var $this = $(this);
+        if ($this.text()[0] === '@') {
+          var thisText = $this.text().trim();
+          var loginname = thisText.slice(1);
+          var offset = $this.offset();
+          var width = $this.width();
+          var mainOffset = $('#main').offset();
+          $repliesHistory.css('left', offset.left-mainOffset.left+width+10); // magic number
+          $repliesHistory.css('top', offset.top-mainOffset.top-10); // magic number
+          $repliesHistory.css({
+            'z-index': 1,
+          });
+          $repliesHistoryContent.empty();
+          var chats = [];
+          var replyToId = $this.closest('.reply_item').attr('reply_to_id');
+          while (replyToId) {
+            var $replyItem = $('.reply_item[reply_id=' + replyToId + ']');
+            var replyContent = $replyItem.find('.reply_content').text().trim();
+            if (replyContent.length > 0) {
+              chats.push([
+                $($replyItem.find('.user_avatar').html()).attr({
+                  height: '30px',
+                  width: '30px',
+                }), // avatar
+                (replyContent.length>300?replyContent.substr(0,300)+'...':replyContent), // reply content
+                '<a href="#'+replyToId+'" class="scroll_to_original" title="查看原文">↑</a>'
+              ]);
+            }
+            replyToId = $replyItem.attr('reply_to_id');
+          }
+          if(chats.length > 0) {
+            chats.reverse();
+            $repliesHistoryContent.append('<div class="title">查看对话</div>');
+            chats.forEach(function (pair, idx) {
+              var $chat = $repliesHistoryContent.append('<div class="item"></div>');
+              $chat.append(pair[0]); // 头像
+              $chat.append($('<span>').text(pair[1])); // 内容
+              $chat.append(pair[2]); // 查看原文 anchor
+            });
+            $repliesHistory.fadeIn('fast');
+          }else{
+            $repliesHistory.hide();
+          }
+        }
+      }).on('mouseleave', '.reply_content a', function (e) {
+        timer = setTimeout(function(){
+          $repliesHistory.fadeOut('fast');
+        }, 500);
+      });
+    }
+    // END 显示被 at 用户的本页评论
+  })();
+  // 点赞
+  $('.up_btn').click(function (e) {
+    var $this = $(this);
+    var replyId = $this.closest('.reply_area').attr('reply_id');
+    $.ajax({
+      url: '/reply/' + replyId + '/up',
+      method: 'POST',
+    }).done(function (data) {
+      if (data.success) {
+        $this.removeClass('invisible');
+        var currentCount = Number($this.next('.up-count').text().trim()) || 0;
+        if (data.action === 'up') {
+          $this.next('.up-count').text(currentCount + 1);
+          $this.addClass('uped');
+        } else {
+          if (data.action === 'down') {
+            $this.next('.up-count').text(currentCount - 1);
+            $this.removeClass('uped');
+          }
+        }
+      } else {
+        alert(data.message);
+      }
+    }).fail(function (xhr) {
+      if (xhr.status === 403) {
+        alert('请先登录，登陆后即可点赞。');
+      }
+    });
+  });
+  // END 点赞
+  // 图片预览
+  (function(){
+    var $previewModal = $('#preview-modal');
+    var $previewImage = $('#preview-image');
+    var $body = $('body'); // cache
+    $(document).on('click', '.markdown-text img', function(e) {
+      var $img = $(this);
+      // 图片被a标签包裹时，不显示弹层
+      if ($img.parent('a').length > 0) {
+        return;
+      }
+      showModal($img.attr('src'));
+    });
+    $previewModal.on('click', hideModal);
+    $previewModal.on('hidden.bs.modal', function() {
+      // 在预览框消失之后恢复 body 的滚动能力
+      $body.css('overflow-y', 'scroll');
+    })
+    $previewModal.on('shown.bs.modal', function() {
+      // 修复上次滚动留下的痕迹,可能会导致短暂的闪烁，不过可以接受
+      // TODO: to be promote
+      $previewModal.scrollTop(0);
+    })
+    function showModal(src) {
+      $previewImage.attr('src', src);
+      $previewModal.modal('show');
+      // 禁止 body 滚动
+      $body.css('overflow-y', 'hidden');
+    }
+    function hideModal() {
+      $previewModal.modal('hide');
+    }
+  })()
+  // END 图片预览
+</script>
+
+</div>
+<div id='backtotop'>回到顶部</div>
+<div id='footer'>
+  <div id='footer_main'>
+    <div class="links">
+      <a class='dark' href='/rss'>RSS</a>
+      |
+      <a class='dark' href='https://github.com/cnodejs/egg-cnode/'>源码地址</a>
+    </div>
+
+    <div class='col_fade'>
+  <p>Powered by egg-cnode, Egg.js为企业级框架和应用而生</p>
+  <p>赞助商为
+    <a href="https://www.digitalocean.com/?refcode=eba02656eeb3" target="_blank"
+      class="sponsor_outlink" data-label="digitalocean">
+      <img src="https://www.itying.com/themes/itying/images/logo.gif" title="digitalocean"
+      alt="digitalocean" width="92px"/>
+    </a>
+  
+  
+  </p> 
+
+  <p>
+    声明：内容均来自于网络，如有侵权行为请发送邮件至1069354500@qq.com,我们将在第一时间删除
+  </p>
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b187a671daa33f3d41390561d47e1242";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</div>
+
+
+  </div>
+</div>
+<div id="sidebar-mask"></div>
+
+
+
+
+
+</body>
+</html>
